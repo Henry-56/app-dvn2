@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@layer utilities {
+  .animate-bubble {
+    animation: bubble-rise linear infinite;
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

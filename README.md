@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlotSim AI - Simulador Inteligente de Flotación Minera
 
-## Getting Started
+**FlotSim AI** es un prototipo funcional de un "Gemelo Digital" diseñado para la optimización multivariable del proceso de flotación en el sector minero. El sistema integra sensores IoT simulados, lógica metalúrgica avanzada y un motor de analítica predictiva.
 
-First, run the development server:
+## 🚀 Características Principales
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Simulación en Tiempo Real**: Modelado dinámico de variables críticas como pH, flujo de aire, dosificación de reactivos y nivel de pulpa.
+- **Gemelo Digital**: Representación visual interactiva de la celda de flotación que reacciona a los cambios en los parámetros de operación.
+- **Analítica Predictiva**: Motor de recomendaciones basado en reglas heurísticas que ayuda a maximizar la recuperación de mineral.
+- **IoT Simulado**: Generación de datos sintéticos con ruido estadístico y detección automática de anomalías en sensores.
+- **Persistencia Local**: Almacenamiento de históricos y configuraciones mediante IndexedDB (sin necesidad de bases de datos externas).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏗️ Arquitectura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+El proyecto sigue una **Arquitectura Hexagonal (Ports and Adapters)** para garantizar la modularidad y facilidad de mantenimiento:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/domain`: Entidades, tipos y lógica central de negocio (fórmulas de flotación).
+- `src/application`: Casos de uso y servicios de alto nivel (motor predictivo).
+- `src/infrastructure`: Adaptadores para persistencia local y generadores de datos IoT.
+- `src/presentation`: Componentes de UI, hooks y gestión de estado con React y Tailwind CSS.
 
-## Learn More
+## 🛠️ Tecnologías Utilizadas
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Lenguaje**: TypeScript
+- **Estilos**: Tailwind CSS
+- **Estado**: Zustand
+- **Gráficos**: Recharts
+- **Iconos**: Lucide React
+- **Base de Datos**: IndexedDB (vía `idb`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Instalación y Uso
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  **Clonar/Descargar el repositorio.**
+2.  **Instalar dependencias**:
+    ```bash
+    npm install
+    ```
+3.  **Ejecutar en modo desarrollo**:
+    ```bash
+    npm run dev
+    ```
+4.  **Abrir en el navegador**: [http://localhost:3000](http://localhost:3000)
 
-## Deploy on Vercel
+## 📄 Documentación Adicional
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Manual de Usuario](file:///C:/Users/HENRY/.gemini/antigravity/brain/d3d8d1c6-1561-4fe9-b2c9-ebed0b4a13fe/manual_usuario.md)
+- [Plan de Implementación](file:///C:/Users/HENRY/.gemini/antigravity/brain/d3d8d1c6-1561-4fe9-b2c9-ebed0b4a13fe/implementation_plan.md)
+- [Resumen de Cambios (Walkthrough)](file:///C:/Users/HENRY/.gemini/antigravity/brain/d3d8d1c6-1561-4fe9-b2c9-ebed0b4a13fe/walkthrough.md)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Desarrollado para el sector minero como prototipo de ingeniería avanzada.*
