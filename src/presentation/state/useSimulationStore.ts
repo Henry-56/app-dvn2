@@ -77,9 +77,14 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
     const alpha = 0.05;
     
     // Smooth transition from current state to target state
-    const newRecovery = currentState.metallurgicalRecovery + alpha * (targetRecovery - currentState.metallurgicalRecovery);
-    const newGrade = currentState.concentrateGrade + alpha * (targetGrade - currentState.concentrateGrade);
-    const newStability = currentState.frothStability + alpha * (targetStability - currentState.frothStability);
+    let newRecovery = currentState.metallurgicalRecovery + alpha * (targetRecovery - currentState.metallurgicalRecovery);
+    let newGrade = currentState.concentrateGrade + alpha * (targetGrade - currentState.concentrateGrade);
+    let newStability = currentState.frothStability + alpha * (targetStability - currentState.frothStability);
+
+    // Snap to target if very close to ensure a perfectly flat line in steady state
+    if (Math.abs(targetRecovery - newRecovery) < 0.001) newRecovery = targetRecovery;
+    if (Math.abs(targetGrade - newGrade) < 0.001) newGrade = targetGrade;
+    if (Math.abs(targetStability - newStability) < 0.001) newStability = targetStability;
 
     const newState = {
       ...currentState,
@@ -87,6 +92,7 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
       concentrateGrade: newGrade,
       frothStability: newStability
     };
+
 
     // 2. Generate IoT Measurements
     const newMeasurements = { ...measurements };
