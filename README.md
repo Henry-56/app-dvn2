@@ -50,3 +50,5 @@ El proyecto sigue una **Arquitectura Hexagonal (Ports and Adapters)** para garan
 
 ---
 *Desarrollado para el sector minero como prototipo de ingeniería avanzada.*
+
+# app.dvn2
