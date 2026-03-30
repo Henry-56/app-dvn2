@@ -13,14 +13,24 @@ export class IoTManager {
     frothStability: { id: 's8', name: 'Stability Sensor', variable: 'frothStability', minRange: 0, maxRange: 10, unit: 'Scale', noiseLevel: 0.2, frequency: 1000 },
   };
 
+  private static previousNoise: Partial<Record<VariableName, number>> = {};
+
   static generateMeasurement(variable: VariableName, value: number): Measurement {
     const config = this.sensors[variable];
-    const noise = (Math.random() - 0.5) * 2 * config.noiseLevel;
-    const finalValue = Math.min(config.maxRange, Math.max(config.minRange, value + noise));
+    
+    // Autoregressive AR(1) smooth noise (Random Walk with mean reversion)
+    const whiteNoise = (Math.random() - 0.5) * 2 * config.noiseLevel;
+    const prevNoise = this.previousNoise[variable] || 0;
+    // Keep 85% of previous curve, add 30% new noise for smooth wandering
+    const currentNoise = (prevNoise * 0.85) + (whiteNoise * 0.3);
+    this.previousNoise[variable] = currentNoise;
+
+    const finalValue = Math.min(config.maxRange, Math.max(config.minRange, value + currentNoise));
     
     // Simulate anomaly (0.5% chance)
     const isAnomaly = Math.random() < 0.005;
     const anomalousValue = isAnomaly ? finalValue * (1 + (Math.random() > 0.5 ? 0.08 : -0.08)) : finalValue;
+
 
 
     return {

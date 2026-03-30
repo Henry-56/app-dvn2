@@ -67,10 +67,19 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
     const { currentState, isRunning, measurements } = get();
     if (!isRunning) return;
 
-    // 1. Calculate dependent variables
-    const newRecovery = FlotationLogic.calculateRecovery(currentState);
-    const newGrade = FlotationLogic.calculateConcentrateGrade(currentState);
-    const newStability = FlotationLogic.calculateFrothStability(currentState);
+    // 1. Calculate TARGET theoretical dependent variables
+    const targetRecovery = FlotationLogic.calculateRecovery(currentState);
+    const targetGrade = FlotationLogic.calculateConcentrateGrade(currentState);
+    const targetStability = FlotationLogic.calculateFrothStability(currentState);
+
+    // Exponential Moving Average (EMA) to simulate process inertia
+    // alpha determines how fast the process reacts (0.05 means 5% movement per tick towards target)
+    const alpha = 0.05;
+    
+    // Smooth transition from current state to target state
+    const newRecovery = currentState.metallurgicalRecovery + alpha * (targetRecovery - currentState.metallurgicalRecovery);
+    const newGrade = currentState.concentrateGrade + alpha * (targetGrade - currentState.concentrateGrade);
+    const newStability = currentState.frothStability + alpha * (targetStability - currentState.frothStability);
 
     const newState = {
       ...currentState,
