@@ -73,8 +73,9 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
     const targetStability = FlotationLogic.calculateFrothStability(currentState);
 
     // Exponential Moving Average (EMA) to simulate process inertia
-    // alpha determines how fast the process reacts (0.05 means 5% movement per tick towards target)
-    const alpha = 0.05;
+    // alpha determines how fast the process reacts (0.02 means 2% movement per tick towards target)
+    const alpha = 0.02;
+
     
     // Smooth transition from current state to target state
     let newRecovery = currentState.metallurgicalRecovery + alpha * (targetRecovery - currentState.metallurgicalRecovery);
