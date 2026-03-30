@@ -18,9 +18,10 @@ export class IoTManager {
     const noise = (Math.random() - 0.5) * 2 * config.noiseLevel;
     const finalValue = Math.min(config.maxRange, Math.max(config.minRange, value + noise));
     
-    // Simulate anomaly (1% chance)
-    const isAnomaly = Math.random() < 0.01;
-    const anomalousValue = isAnomaly ? finalValue * (1 + (Math.random() > 0.5 ? 0.3 : -0.3)) : finalValue;
+    // Simulate anomaly (0.5% chance)
+    const isAnomaly = Math.random() < 0.005;
+    const anomalousValue = isAnomaly ? finalValue * (1 + (Math.random() > 0.5 ? 0.08 : -0.08)) : finalValue;
+
 
     return {
       timestamp: Date.now(),

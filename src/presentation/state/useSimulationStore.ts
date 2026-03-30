@@ -27,10 +27,11 @@ const INITIAL_STATE: FlotationState = {
   airFlow: 6,
   particleSize: 75,
   reagentDosage: 0.8,
-  metallurgicalRecovery: 0,
-  concentrateGrade: 0,
-  frothStability: 0
+  metallurgicalRecovery: 76.5,
+  concentrateGrade: 19.76,
+  frothStability: 6.4
 };
+
 
 export const useSimulationStore = create<SimulationState>((set, get) => ({
   isRunning: false,
