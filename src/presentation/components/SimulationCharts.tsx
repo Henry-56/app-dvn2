@@ -14,18 +14,17 @@ export const SimulationCharts: React.FC = () => {
 
   if (!isMounted) return <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[400px]"><div className="bg-slate-900/50 border border-slate-800 rounded-2xl animate-pulse" /><div className="bg-slate-900/50 border border-slate-800 rounded-2xl animate-pulse" /></div>;
 
-  const data = measurements.metallurgicalRecovery
-    .filter(m => m.value > 0)
-    .map((m, i) => {
-      const date = new Date(m.timestamp);
-      return {
-        time: `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`,
-        recovery: m.value,
-        grade: measurements.concentrateGrade[i]?.value || 0,
-        pH: measurements.pH[i]?.value || 0,
-      };
-    });
-
+  // Synchronize data series by ensuring indexes match or mapping from a single source
+  const data = measurements.metallurgicalRecovery.map((m, i) => {
+    const date = new Date(m.timestamp);
+    // Find corresponding measurements for the same index/time
+    return {
+      time: `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`,
+      recovery: m.value,
+      grade: measurements.concentrateGrade[i]?.value || 0,
+      pH: measurements.pH[i]?.value || 0,
+    };
+  });
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -43,13 +42,25 @@ export const SimulationCharts: React.FC = () => {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
             <XAxis dataKey="time" stroke="#64748b" tick={{ fontSize: 10 }} />
-            <YAxis domain={['dataMin - 2', 'dataMax + 2']} stroke="#64748b" tick={{ fontSize: 10 }} />
-
+            <YAxis 
+              domain={['auto', 'auto']} 
+              stroke="#64748b" 
+              tick={{ fontSize: 10 }} 
+              tickFormatter={(val) => val.toFixed(1)}
+              width={40}
+            />
             <Tooltip 
               contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
               itemStyle={{ color: '#10b981' }}
             />
-            <Area type="monotone" dataKey="recovery" stroke="#10b981" fillOpacity={1} fill="url(#colorRec)" />
+            <Area 
+              type="monotone" 
+              dataKey="recovery" 
+              stroke="#10b981" 
+              fillOpacity={1} 
+              fill="url(#colorRec)" 
+              isAnimationActive={false} 
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -68,16 +79,29 @@ export const SimulationCharts: React.FC = () => {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
             <XAxis dataKey="time" stroke="#64748b" tick={{ fontSize: 10 }} />
-            <YAxis domain={['dataMin - 1', 'dataMax + 1']} stroke="#64748b" tick={{ fontSize: 10 }} />
-
+            <YAxis 
+              domain={['auto', 'auto']} 
+              stroke="#64748b" 
+              tick={{ fontSize: 10 }} 
+              tickFormatter={(val) => val.toFixed(1)}
+              width={40}
+            />
             <Tooltip 
               contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
               itemStyle={{ color: '#3b82f6' }}
             />
-            <Area type="monotone" dataKey="grade" stroke="#3b82f6" fillOpacity={1} fill="url(#colorGrade)" />
+            <Area 
+              type="monotone" 
+              dataKey="grade" 
+              stroke="#3b82f6" 
+              fillOpacity={1} 
+              fill="url(#colorGrade)" 
+              isAnimationActive={false} 
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 };
+
