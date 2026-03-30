@@ -43,10 +43,15 @@ export const SimulationCharts: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
             <XAxis dataKey="time" stroke="#64748b" tick={{ fontSize: 10 }} />
             <YAxis 
-              domain={['auto', 'auto']} 
+              domain={([dataMin, dataMax]) => {
+                const mid = (dataMin + dataMax) / 2;
+                const spread = Math.max(2, dataMax - dataMin);
+                return [mid - spread / 2, mid + spread / 2];
+              }}
               stroke="#64748b" 
               tick={{ fontSize: 10 }} 
               tickFormatter={(val) => val.toFixed(1)}
+              tickCount={5}
               width={40}
             />
             <Tooltip 
@@ -80,12 +85,18 @@ export const SimulationCharts: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
             <XAxis dataKey="time" stroke="#64748b" tick={{ fontSize: 10 }} />
             <YAxis 
-              domain={['auto', 'auto']} 
+              domain={([dataMin, dataMax]) => {
+                const mid = (dataMin + dataMax) / 2;
+                const spread = Math.max(2, dataMax - dataMin);
+                return [mid - spread / 2, mid + spread / 2];
+              }}
               stroke="#64748b" 
               tick={{ fontSize: 10 }} 
               tickFormatter={(val) => val.toFixed(1)}
+              tickCount={5}
               width={40}
             />
+
             <Tooltip 
               contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
               itemStyle={{ color: '#3b82f6' }}
